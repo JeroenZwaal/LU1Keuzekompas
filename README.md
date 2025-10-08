@@ -1,59 +1,108 @@
-# LU1Keuzekompas
+# LU1 Keuzekompas - Full Stack Application
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.3.
+Deze repository bevat een volledig full-stack applicatie voor het LU1 Keuzekompas project, bestaande uit:
 
-## Development server
+- **Frontend**: Angular applicatie (poort 4200)
+- **Backend**: NestJS API (poort 3000)
 
-To start a local development server, run:
+## 🚀 Quick Start
 
-```bash
-ng serve
+### Optie 1: Automatische Start (Aanbevolen)
+
+**Windows Command Prompt:**
+```cmd
+start.bat
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
+**PowerShell:**
+```powershell
+.\start.ps1
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
+**NPM (alle platformen):**
 ```bash
-ng generate --help
+npm run install:all
+npm start
 ```
 
-## Building
+### Optie 2: Handmatige Start
 
-To build the project run:
-
+1. **Dependencies installeren:**
 ```bash
-ng build
+# Root dependencies
+npm install
+
+# Backend dependencies  
+cd Backend/api-keuze-kompass-lu1
+npm install
+cd ../..
+
+# Frontend dependencies
+cd Frontend/ClientKeuzeKompassLU1  
+npm install
+cd ../..
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
+2. **Beide applicaties starten:**
 ```bash
-ng test
+npm start
 ```
 
-## Running end-to-end tests
+## 📂 Project Structuur
 
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
+```
+LU1Keuzekompas/
+├── Backend/
+│   └── api-keuze-kompass-lu1/          # NestJS API
+├── Frontend/
+│   └── ClientKeuzeKompassLU1/          # Angular App
+├── package.json                        # Root package met scripts
+├── start.bat                          # Windows batch script
+├── start.ps1                          # PowerShell script
+└── README.md                          # Dit bestand
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## 🛠️ Beschikbare Scripts
 
-## Additional Resources
+| Script | Beschrijving |
+|--------|-------------|
+| `npm start` | Start beide applicaties in development mode |
+| `npm run start:backend` | Start alleen de backend |
+| `npm run start:frontend` | Start alleen de frontend |
+| `npm run install:all` | Installeer alle dependencies |
+| `npm run build:all` | Build beide applicaties |
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## 🌐 URLs
+
+- **Frontend (Angular)**: http://localhost:4200
+- **Backend (NestJS)**: http://localhost:3000
+
+## 📋 Vereisten
+
+- Node.js (versie 16 of hoger)
+- NPM (meestal meegeleverd met Node.js)
+
+## 🔧 Development
+
+### Alleen Backend Starten
+```bash
+cd Backend/api-keuze-kompass-lu1
+npm run start:dev
+```
+
+### Alleen Frontend Starten  
+```bash
+cd Frontend/ClientKeuzeKompassLU1
+npm start
+```
+
+## 🛑 Stoppen
+
+Druk `Ctrl+C` in de terminal om beide applicaties te stoppen.
+
+## 📝 Notities
+
+- De backend draait op poort 3000
+- De frontend draait op poort 4200  
+- Beide applicaties starten automatisch in development/watch mode
+- Wijzigingen worden automatisch herladen

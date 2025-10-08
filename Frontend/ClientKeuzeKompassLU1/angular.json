@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "LU1Keuzekompas": {
+    "ClientKeuzeKompassLU1": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -26,12 +26,7 @@
             ],
             "styles": [
               "src/styles.css"
-            ],
-            "server": "src/main.server.ts",
-            "outputMode": "server",
-            "ssr": {
-              "entry": "src/server.ts"
-            }
+            ]
           },
           "configurations": {
             "production": {
@@ -61,10 +56,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "LU1Keuzekompas:build:production"
+              "buildTarget": "ClientKeuzeKompassLU1:build:production"
             },
             "development": {
-              "buildTarget": "LU1Keuzekompas:build:development"
+              "buildTarget": "ClientKeuzeKompassLU1:build:development"
             }
           },
           "defaultConfiguration": "development"
