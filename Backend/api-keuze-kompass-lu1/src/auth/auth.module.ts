@@ -28,6 +28,7 @@ import { UserSchema } from '../infrastructure/database/user.schema';
   ],
   exports: [
     AuthService,
+    JwtStrategy,
     {
       provide: 'IUserRepository',
       useClass: UserRepository,

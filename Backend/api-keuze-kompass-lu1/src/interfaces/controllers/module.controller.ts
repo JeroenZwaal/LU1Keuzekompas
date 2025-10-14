@@ -2,21 +2,55 @@ import { Controller, Get, Param, Query, HttpStatus, HttpException, UseGuards } f
 import { ModuleResponseDto } from '../presenters/module.dto';
 import { ModuleService } from '../../application/services/module.service';
 import { Module } from '../../domain/entities/module.entity';
+import { JwtAuthGuard } from 'src/infrastructure/auth/jwt.auth.guard';
+import { CurrentUser } from '../decorators/current.user.decorator';
+import { User } from '../../domain/entities/user.entity';
 
 @Controller('api/modules')
 export class ModuleController {
   constructor(private readonly moduleService: ModuleService) {}
 
     @Get()
-    async getAllModules(): Promise<ModuleResponseDto []> {
+    @UseGuards(JwtAuthGuard)
+    async getModules(
+        @CurrentUser() user: User,
+        @Query('studycredit') studycredit?: number,
+        @Query('location') location?: string,
+        @Query('level') level?: string,
+        @Query('name') name?: string,
+        ): Promise<(ModuleResponseDto & { favorited: boolean })[]> {
         try {
-            const modules = await this.moduleService.getAllModules();
-            return modules.map(module => this.mapToResponseDto(module));
+            // Bouw filter object
+            const filters: {
+            studycredit?: number;
+            location?: string;
+            level?: string;
+            name?: string;
+            } = {};
+
+            if (studycredit !== undefined) filters.studycredit = Number(studycredit);
+            if (location) filters.location = location;
+            if (level) filters.level = level;
+            if (name) filters.name = name;
+
+            // Haal modules op uit de service
+            const modules = await this.moduleService.getFilteredModules(filters);
+
+            // Haal favorieten van ingelogde gebruiker
+            const userFavoritesIds = user?.favorites.map(fav => fav.moduleId) || [];
+
+            // Map modules naar DTO en voeg favorited veld toe
+            return modules.map(module => ({
+            ...this.mapToResponseDto(module),
+            favorited: userFavoritesIds.includes(module.id),
+            }));
         } catch (error) {
             throw new HttpException('Failed to fetch modules', HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
+
+    @UseGuards(JwtAuthGuard)
     @Get(':id')
     async getModuleById(@Param('id') id: string): Promise<ModuleResponseDto> {
         try {

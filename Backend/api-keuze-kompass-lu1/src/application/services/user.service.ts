@@ -4,10 +4,7 @@ import type { IUserRepository } from '../../domain/repositories/i.user.repositor
 
 @Injectable()
 export class UserService {
-  constructor(
-    @Inject('IUserRepository')
-    private readonly userRepository: IUserRepository
-  ) {}
+  constructor(@Inject('IUserRepository') private readonly userRepository: IUserRepository) {}
 
   async addFavorite(userId: string, favorite: UserFavorite): Promise<User> {
     const user = await this.userRepository.findById(userId);

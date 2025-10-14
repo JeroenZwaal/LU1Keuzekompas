@@ -4,10 +4,8 @@ import { UserResponseDto } from '../presenters/user.dto';
 import { AddFavoriteDto, UpdateEmailDto } from '../presenters/favorites.dto';
 import { JwtAuthGuard } from '../../infrastructure/auth/jwt.auth.guard';
 import { User, UserFavorite } from 'src/domain/entities/user.entity';
+import { CurrentUser } from '../decorators/current.user.decorator';
 
-interface AuthenticatedRequest extends Request {
-  user: User;
-}
 
 @Controller('api/users')
 export class UserController {
@@ -15,10 +13,10 @@ export class UserController {
 
   @UseGuards(JwtAuthGuard)
   @Post('favorites')
-  async addFavorite(@Request() req: AuthenticatedRequest, @Body() addFavoriteDto: AddFavoriteDto): Promise<UserResponseDto> {
+  async addFavorite(@CurrentUser() user: User, @Body() addFavoriteDto: AddFavoriteDto): Promise<UserResponseDto> {
     try {
-      const userId = req.user._id; // Use 'id' instead of '_id'
-      
+      const userId = user._id;
+
       const newFavorite = new UserFavorite(
         addFavoriteDto.module_id,
         new Date(),
@@ -40,10 +38,10 @@ export class UserController {
 
   @UseGuards(JwtAuthGuard)
   @Delete('favorites/:moduleId')
-  async removeFavorite(@Request() req: AuthenticatedRequest, @Param('moduleId') moduleId: string): Promise<UserResponseDto> {
+  async removeFavorite(@CurrentUser() user: User, @Param('moduleId') moduleId: string): Promise<UserResponseDto> {
     try {
-      const userId = req.user._id; // Use 'id' instead of '_id'
-      
+      const userId = user._id; 
+
       const updatedUser = await this.userService.removeFavorite(userId, moduleId);
       
       return this.mapToResponseDto(updatedUser);

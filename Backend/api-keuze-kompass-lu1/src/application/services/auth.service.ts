@@ -10,10 +10,7 @@ export class AuthService {
   private readonly jwtSecret = process.env.JWT_SECRET || 'defaultsecret';
   private readonly jwtExpiresIn = '24h';
 
-  constructor(
-    @Inject('IUserRepository')
-    private readonly userRepository: IUserRepository,
-  ) {}
+  constructor(@Inject('IUserRepository') private readonly userRepository: IUserRepository) {}
 
   async register(registerDto: RegisterDto): Promise<{ access_token: string; user: any }> {
     // Normalize email to lowercase

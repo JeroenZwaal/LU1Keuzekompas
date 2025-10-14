@@ -17,4 +17,15 @@ export class ModuleService {
         }
         return module;
     }
+
+
+    async getFilteredModules(filters: {
+        studycredit?: number;
+        location?: string;
+        level?: string;
+        name?: string;
+    }): Promise<Module[]> {
+        return await this.moduleRepository.findFiltered(filters);
+    }
+
 }
