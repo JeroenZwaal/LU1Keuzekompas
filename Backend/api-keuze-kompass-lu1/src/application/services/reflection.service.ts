@@ -10,6 +10,10 @@ export class ReflectionService {
     return this.reflectionRepository.findByModuleId(moduleId);
   }
 
+  async getReflectionByUserIdAndModuleId(userId: string, moduleId: string): Promise<Reflection | null> {
+    return await this.reflectionRepository.findByUserIdAndModuleId(userId, moduleId);
+  }
+
   async createReflection(
     moduleId: string, 
     userId: string, 

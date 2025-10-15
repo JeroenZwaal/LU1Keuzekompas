@@ -1,0 +1,51 @@
+<div class="login-container">
+  <div class="login-card">
+    <div class="login-header">
+      <h1>Welkom Terug</h1>
+      <p>Log in op je Keuze Kompas account</p>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          id="email"
+          formControlName="email"
+          [class.error]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
+          placeholder="voornaam@avans.nl"
+        />
+        <span class="error-message">{{ getFieldError('email') }}</span>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Wachtwoord</label>
+        <input
+          type="password"
+          id="password"
+          formControlName="password"
+          [class.error]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+          placeholder="Voer je wachtwoord in"
+        />
+        <span class="error-message">{{ getFieldError('password') }}</span>
+      </div>
+
+      <div class="form-group" *ngIf="errorMessage">
+        <div class="error-banner">{{ errorMessage }}</div>
+      </div>
+
+      <button
+        type="submit"
+        [disabled]="loginForm.invalid || isLoading"
+        class="login-button"
+      >
+        <span *ngIf="isLoading">Bezig met inloggen...</span>
+        <span *ngIf="!isLoading">Inloggen</span>
+      </button>
+    </form>
+
+    <div class="login-footer">
+      <p>Nog geen account? <a routerLink="/auth/register">Account aanmaken</a></p>
+    </div>
+  </div>
+</div>

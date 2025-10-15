@@ -1,0 +1,91 @@
+<div class="register-container">
+  <div class="register-card">
+    <div class="register-header">
+      <h1>Account Aanmaken</h1>
+      <p>Maak een account aan voor Keuze Kompas</p>
+    </div>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="firstname">Voornaam</label>
+          <input
+            type="text"
+            id="firstname"
+            formControlName="firstname"
+            [class.error]="registerForm.get('firstname')?.invalid && registerForm.get('firstname')?.touched"
+            placeholder="Voer je voornaam in"
+          />
+          <span class="error-message">{{ getFieldError('firstname') }}</span>
+        </div>
+
+        <div class="form-group">
+          <label for="lastname">Achternaam</label>
+          <input
+            type="text"
+            id="lastname"
+            formControlName="lastname"
+            [class.error]="registerForm.get('lastname')?.invalid && registerForm.get('lastname')?.touched"
+            placeholder="Voer je achternaam in"
+          />
+          <span class="error-message">{{ getFieldError('lastname') }}</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          id="email"
+          formControlName="email"
+          [class.error]="registerForm.get('email')?.invalid && registerForm.get('email')?.touched"
+          placeholder="voornaam@avans.nl"
+        />
+        <span class="error-message">{{ getFieldError('email') }}</span>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Wachtwoord</label>
+        <input
+          type="password"
+          id="password"
+          formControlName="password"
+          [class.error]="registerForm.get('password')?.invalid && registerForm.get('password')?.touched"
+          placeholder="Minimaal 6 karakters"
+        />
+        <span class="error-message">{{ getFieldError('password') }}</span>
+      </div>
+
+      <div class="form-group">
+        <label for="confirmPassword">Bevestig Wachtwoord</label>
+        <input
+          type="password"
+          id="confirmPassword"
+          formControlName="confirmPassword"
+          [class.error]="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched"
+          placeholder="Herhaal je wachtwoord"
+        />
+        <span class="error-message" *ngIf="registerForm.errors?.['passwordMismatch'] && registerForm.get('confirmPassword')?.touched">
+          Wachtwoorden komen niet overeen
+        </span>
+      </div>
+
+      <div class="form-group" *ngIf="errorMessage">
+        <div class="error-banner">{{ errorMessage }}</div>
+      </div>
+
+      <button
+        type="submit"
+        [disabled]="registerForm.invalid || isLoading"
+        class="register-button"
+      >
+        <span *ngIf="isLoading">Bezig met registreren...</span>
+        <span *ngIf="!isLoading">Account Aanmaken</span>
+      </button>
+    </form>
+
+    <div class="register-footer">
+      <p>Heb je al een account? <a routerLink="/auth/login">Inloggen</a></p>
+    </div>
+  </div>
+</div>

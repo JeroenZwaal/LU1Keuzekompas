@@ -1,0 +1,114 @@
+<div class="favorites-container">
+
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="loading-state">
+    <div class="loading-spinner"></div>
+    <p>Favorieten laden...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="errorMessage" class="error-state">
+    <strong>Fout:</strong> {{ errorMessage }}
+    <button (click)="loadFavoriteModules()" class="btn btn-danger btn-small">Opnieuw proberen</button>
+  </div>
+
+  <!-- Main Content -->
+  <div *ngIf="!isLoading && !errorMessage" class="comparison-content">
+
+    <!-- Comparison Grid -->
+    <div *ngIf="filteredFavorites.length > 0" class="comparison-container">
+      
+      <!-- Comparison Table -->
+      <div class="comparison-table">
+        
+        <!-- Header Row with Module Names -->
+        <div class="comparison-row comparison-header">
+          <div class="comparison-label"></div>
+          <div *ngFor="let module of filteredFavorites; trackBy: trackByModule" class="comparison-cell module-header-cell">
+            <h3>{{ module.name }}</h3>
+            <button 
+              (click)="removeFavorite(module)" 
+              class="remove-favorite-btn"
+              title="Verwijder uit favorieten">
+              <i class="fas fa-heart"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Description Row -->
+        <div class="comparison-row">
+          <div class="comparison-label">
+            <strong>Beschrijving</strong>
+          </div>
+          <div *ngFor="let module of filteredFavorites" class="comparison-cell">
+            <p class="module-description">{{ module.shortdescription }}</p>
+          </div>
+        </div>
+
+        <!-- Location Row -->
+        <div class="comparison-row">
+          <div class="comparison-label">
+            <strong>Locatie</strong>
+          </div>
+          <div *ngFor="let module of filteredFavorites" class="comparison-cell">
+            <span class="badge badge-location">{{ module.location }}</span>
+          </div>
+        </div>
+
+        <!-- Study Credits Row -->
+        <div class="comparison-row">
+          <div class="comparison-label">
+            <strong>Studiepunten</strong>
+          </div>
+          <div *ngFor="let module of filteredFavorites" class="comparison-cell">
+            <span class="badge badge-credit">{{ module.studycredit }} punten</span>
+          </div>
+        </div>
+
+        <!-- Level Row -->
+        <div class="comparison-row">
+          <div class="comparison-label">
+            <strong>Niveau</strong>
+          </div>
+          <div *ngFor="let module of filteredFavorites" class="comparison-cell">
+            <span class="badge badge-level">{{ module.level }}</span>
+          </div>
+        </div>
+
+        <!-- Content Row -->
+        <div class="comparison-row">
+          <div class="comparison-label">
+            <strong>Inhoud</strong>
+          </div>
+          <div *ngFor="let module of filteredFavorites" class="comparison-cell">
+            <div class="content-preview">{{module.content}}</div>
+          </div>
+        </div>
+
+        <!-- Learning Outcomes Row -->
+        <div class="comparison-row">
+          <div class="comparison-label">
+            <strong>Leerdoelen</strong>
+          </div>
+          <div *ngFor="let module of filteredFavorites" class="comparison-cell">
+            <div class="content-preview">{{module.learningoutcomes}}</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- No Favorites State -->
+    <div *ngIf="favoriteModules.length === 0" class="no-favorites-state">
+      <div class="no-favorites-content">
+        <h3>Nog geen favorieten om te vergelijken</h3>
+        <p>Je hebt nog geen modules toegevoegd aan je favorieten.</p>
+        <p>Ga naar het module overzicht en klik op het hartje om modules toe te voegen!</p>
+        <button (click)="goToModules()" class="btn btn-primary">
+          Bekijk alle modules
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>

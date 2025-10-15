@@ -1,0 +1,120 @@
+<div class="reflection-form-container">
+
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="loading-state">
+    <div class="loading-spinner"></div>
+    <p>Reflectie laden...</p>
+  </div>
+
+  <!-- Main Form -->
+  <div *ngIf="!isLoading" class="reflection-form-content">
+    
+    <!-- Success Message -->
+    <div *ngIf="successMessage" class="success-message">
+      <i class="fas fa-check-circle"></i>
+      {{ successMessage }}
+    </div>
+
+    <!-- Error Message -->
+    <div *ngIf="errorMessage" class="error-message">
+      <i class="fas fa-exclamation-triangle"></i>
+      {{ errorMessage }}
+    </div>
+
+    <!-- Form Card -->
+    <div class="form-card">
+      <form (ngSubmit)="onSubmit()" #reflectionForm="ngForm">
+        
+        <!-- Module Info -->
+        <div class="module-info" *ngIf="module">
+          <h3>{{ module.name }}</h3>
+          <div class="module-badges">
+            <span class="badge badge-location">{{ module.location }}</span>
+            <span class="badge badge-credit">{{ module.studycredit }} punten</span>
+            <span class="badge badge-level">{{ module.level }}</span>
+          </div>
+        </div>
+
+        <!-- Rating Section -->
+        <div class="form-group">
+          <label for="rating">
+            <strong>Beoordeling</strong>
+            <span class="required">*</span>
+          </label>
+          <div class="rating-container">
+            <div class="star-rating">
+              <i *ngFor="let star of [1,2,3,4,5]; let i = index" 
+                 [class]="getStarClass(i + 1)"
+                 (click)="setRating(i + 1)"
+                 [title]="(i + 1) + ' ster' + (i > 0 ? 'ren' : '')">
+              </i>
+            </div>
+            <span class="rating-text">{{ formData.rating }} van 5 sterren</span>
+          </div>
+        </div>
+
+        <!-- Content Section -->
+        <div class="form-group">
+          <label for="content">
+            <strong>Reflectie</strong>
+            <span class="required">*</span>
+          </label>
+          <div class="content-info">
+            <p>Beschrijf je ervaringen, leerpunten en gedachten over deze module.</p>
+          </div>
+          <textarea
+            id="content"
+            name="content"
+            [(ngModel)]="formData.content"
+            required
+            rows="8"
+            placeholder="Schrijf hier je reflectie... "
+            class="form-textarea">
+          </textarea>
+          <div class="character-count">
+            {{ formData.content.length }} karakters
+          </div>
+        </div>
+
+        <!-- Last Updated Info -->
+        <div *ngIf="reflection" class="last-updated">
+          <i class="fas fa-clock"></i>
+          Laatst bijgewerkt: {{ formatDate(reflection.updatedAt) }}
+        </div>
+
+        <!-- Form Actions -->
+        <div class="form-actions">
+          <div class="action-buttons">
+            <button 
+              type="button" 
+              (click)="goBack()" 
+              class="btn btn-secondary"
+              [disabled]="isSaving">
+              Annuleren
+            </button>
+            
+            <button 
+              type="submit" 
+              class="btn btn-primary"
+              [disabled]="!isValidForm() || isSaving">
+              {{ isSaving ? 'Opslaan...' : (reflection ? 'Bijwerken' : 'Opslaan') }}
+            </button>
+          </div>
+
+          <!-- Delete Button -->
+          <div *ngIf="reflection" class="delete-section">
+            <button 
+              type="button" 
+              (click)="onDelete()" 
+              class="btn btn-danger btn-outline"
+              [disabled]="isSaving">
+              Reflectie Verwijderen
+            </button>
+          </div>
+        </div>
+
+      </form>
+    </div>
+
+  </div>
+</div>

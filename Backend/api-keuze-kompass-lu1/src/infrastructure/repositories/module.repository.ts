@@ -31,7 +31,7 @@ export class ModuleRepository implements IModuleRepository {
         query.studycredit = filters.studycredit;
 
       if (filters.location)
-        query.location = filters.location;
+        query.location = { $regex: filters.location, $options: 'i' };
 
       if (filters.level)
         query.level = filters.level;

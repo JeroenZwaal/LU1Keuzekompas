@@ -21,6 +21,27 @@ export class ReflectionController {
     }
   }
 
+  @Get('my-reflection')
+  async getMyReflection(
+      @Param('moduleId') moduleId: string,
+      @CurrentUser() user: User
+  ): Promise<ReflectionResponseDto | null> {
+    try {
+      const reflection = await this.reflectionService.getReflectionByUserIdAndModuleId(user._id, moduleId);
+      
+      if (!reflection) {
+        throw new HttpException('Geen reflectie gevonden', HttpStatus.NOT_FOUND);
+      }
+      
+      return this.mapToResponseDto(reflection);
+    } catch (error) {
+      if (error instanceof HttpException) {
+        throw error;
+      }
+      throw new HttpException('Kon reflectie niet ophalen', HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
   @Post()
   async createReflection(
     @Param('moduleId') moduleId: string,

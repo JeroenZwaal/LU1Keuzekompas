@@ -1,0 +1,90 @@
+<div class="module-list-container">
+
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="loading-state">
+    <p>Modules laden...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="errorMessage" class="error-state">
+    <strong>Fout:</strong> {{ errorMessage }}
+    <button (click)="loadModules()" class="btn btn-danger btn-small">Opnieuw proberen</button>
+  </div>
+
+  <!-- Filter Section -->
+  <div *ngIf="!isLoading" class="filter-card">
+    <h3>Filters</h3>
+    <div class="filter-grid">
+      <div class="filter-item">
+        <label>Zoeken:</label>
+        <input 
+          type="text" 
+          [(ngModel)]="filters.name"
+          (input)="onFilterChange()"
+          placeholder="Zoek op naam..."
+          class="filter-input">
+      </div>
+      
+      <div class="filter-item">
+        <label>Locatie:</label>
+        <select [(ngModel)]="filters.location" (change)="onFilterChange()" class="filter-select">
+          <option value="">Alle locaties</option>
+          <option value="Den Bosch">Den Bosch</option>
+          <option value="Breda">Breda</option>
+          <option value="Tilburg">Tilburg</option>
+        </select>
+      </div>
+      
+      <div class="filter-item">
+        <label>Studiepunten:</label>
+        <select [(ngModel)]="filters.studycredit" (change)="onFilterChange()" class="filter-select">
+          <option value="">Alle studiepunten</option>
+          <option value="15">15 punten</option>
+          <option value="30">30 punten</option>
+        </select>
+      </div>
+      
+      <div class="filter-item">
+        <label>Niveau:</label>
+        <select [(ngModel)]="filters.level" (change)="onFilterChange()" class="filter-select">
+          <option value="">Alle niveaus</option>
+          <option value="NLQF5">NLQF5</option>
+          <option value="NLQF6">NLQF6</option>
+        </select>
+      </div>
+    </div>
+    
+    <button (click)="clearFilters()" class="btn btn-secondary">Filters wissen</button>
+  </div>
+
+  <!-- Modules Grid -->
+  <div *ngIf="!isLoading && !errorMessage" class="modules-grid">
+    <div *ngFor="let module of filteredModules; trackBy: trackByModule" class="module-card" (click)="viewModule(module.id)">
+      
+      <div class="module-header">
+        <h3>{{ module.name }}</h3>
+        <button 
+          (click)="toggleFavorite(module)" 
+          [class]="'favorite-btn ' + (isFavorite(module.id) ? 'favorite-active' : 'favorite-inactive')"
+          [title]="isFavorite(module.id) ? 'Verwijder uit favorieten' : 'Toevoegen aan favorieten'">
+          <i [class]="isFavorite(module.id) ? 'fas fa-heart' : 'far fa-heart'"></i>
+        </button>
+      </div>
+      
+      <p class="module-description">{{ module.shortdescription }}</p>
+      
+      <div class="module-badges">
+        <span class="badge badge-location">{{ module.location }}</span>
+        <span class="badge badge-credit">{{ module.studycredit }} punten</span>
+        <span class="badge badge-level">{{ module.level }}</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="!isLoading && filteredModules.length === 0 && !errorMessage" class="empty-state">
+    <h3>Geen modules gevonden</h3>
+    <p>Probeer je filters aan te passen of zoek op een andere term.</p>
+  </div>
+</div>

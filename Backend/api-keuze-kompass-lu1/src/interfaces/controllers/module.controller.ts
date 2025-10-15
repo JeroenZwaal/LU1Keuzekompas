@@ -52,13 +52,24 @@ export class ModuleController {
 
     @UseGuards(JwtAuthGuard)
     @Get(':id')
-    async getModuleById(@Param('id') id: string): Promise<ModuleResponseDto> {
+    async getModuleById(
+        @Param('id') id: string,
+        @CurrentUser() user: User
+    ): Promise<ModuleResponseDto & { favorited: boolean }> {
         try {
             const module = await this.moduleService.getModuleById(id);  
             if (!module) {
                 throw new HttpException('Module not found', HttpStatus.NOT_FOUND);
             }
-            return this.mapToResponseDto(module);
+
+            // Check of deze module in de favorieten van de gebruiker staat
+            const userFavoritesIds = user?.favorites.map(fav => fav.moduleId) || [];
+            const favorited = userFavoritesIds.includes(module.id);
+
+            return {
+                ...this.mapToResponseDto(module),
+                favorited: favorited
+            };
         } catch (error) {
             if (error instanceof HttpException) {
                 throw error;

@@ -1,0 +1,84 @@
+<div class="module-detail-container">
+
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="loading-state">
+    <div class="loading-spinner"></div>
+    <p>Module laden...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="errorMessage" class="error-state">
+    <strong>Fout:</strong> {{ errorMessage }}
+    <button (click)="loadModule()" class="btn btn-danger btn-small">Opnieuw proberen</button>
+  </div>
+
+  <!-- Module Content -->
+  <div *ngIf="!isLoading && !errorMessage && module" class="module-detail-content">
+    <!-- Module Info Card -->
+    <div class="module-info-card">
+      <div class="module-title-section">
+       <div class="title-favorite-row">
+            <h1>{{ module.name }}</h1>
+            <button 
+                (click)="toggleFavorite()" 
+                [class]="'favorite-btn ' + (isFavorite() ? 'favorite-active' : 'favorite-inactive')"
+                [title]="isFavorite() ? 'Verwijder uit favorieten' : 'Toevoegen aan favorieten'">
+                <i [class]="isFavorite() ? 'fas fa-heart' : 'far fa-heart'"></i>
+                {{ isFavorite() ? 'Favoriet' : 'Favoriet toevoegen' }}
+            </button>
+        </div>
+        <div class="module-badges">
+          <span class="badge badge-location">{{ module.location }}</span>
+          <span class="badge badge-credit">{{ module.studycredit }} studiepunten</span>
+          <span class="badge badge-level">{{ module.level }}</span>
+        </div>
+      </div>
+
+      <div class="module-description">
+        <h3>Korte beschrijving</h3>
+        <p>{{ module.shortdescription }}</p>
+      </div>
+    </div>
+
+    <!-- Detailed Content -->
+    <div class="module-content-grid">
+      
+      <!-- Content Section -->
+      <div class="content-section">
+        <h3>Inhoud</h3>
+        <div class="content-text" [innerHTML]="module.content"></div>
+      </div>
+
+      <!-- Learning Outcomes Section -->
+      <div class="content-section">
+        <h3>Leerdoelen</h3>
+        <div class="content-text" [innerHTML]="module.learningoutcomes"></div>
+      </div>
+
+      <!-- Additional Info -->
+      <div class="content-section info-grid">
+        <h3>Aanvullende informatie</h3>
+        <div class="info-item">
+          <strong>Locatie:</strong>
+          <span>{{ module.location }}</span>
+        </div>
+        <div class="info-item">
+          <strong>Studiepunten:</strong>
+          <span>{{ module.studycredit }} ECTS</span>
+        </div>
+        <div class="info-item">
+          <strong>Niveau:</strong>
+          <span>{{ module.level }}</span>
+        </div>
+      </div>
+
+      <!-- Reflections Section -->
+      <div class="content-section">
+        <h3>Reflectie</h3>
+        <button (click)="viewReflections()" class="btn btn-primary">
+          Reflectie
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,33 @@
+<div class="main-layout">
+  <header class="main-header">
+    <div class="header-container">
+      <div class="header-brand">
+        <h1 routerLink="/modules">Keuze Kompas</h1>
+      </div>
+      
+      <nav class="header-nav">
+        <a routerLink="/modules" routerLinkActive="active">Modules</a>
+        <a routerLink="/favorites" routerLinkActive="active">Favorieten</a>
+      </nav>
+
+      <div class="header-user">
+        <span class="user-greeting" *ngIf="currentUser">
+          Hallo, {{ currentUser.firstname }}!
+        </span>
+        <button class="logout-button" (click)="logout()">
+          Uitloggen
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <router-outlet></router-outlet>
+  </main>
+
+  <footer class="main-footer">
+    <div class="footer-container">
+      <p>&copy; 2025 Keuze Kompas - Avans Hogeschool</p>
+    </div>
+  </footer>
+</div>

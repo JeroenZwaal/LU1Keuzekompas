@@ -1,12 +1,17 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  standalone: true,
+  imports: [RouterOutlet], // Belangrijk: RouterOutlet importeren
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrls: ['./app.css']
 })
 export class App {
-  protected readonly title = signal('ClientKeuzeKompassLU1');
+  title = 'Keuze Kompas';
+  
+  constructor() {
+    console.log('AppComponent loaded'); // Debug log
+  }
 }
