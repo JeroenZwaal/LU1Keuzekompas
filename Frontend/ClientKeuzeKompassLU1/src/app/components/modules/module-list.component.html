@@ -64,7 +64,7 @@
       <div class="module-header">
         <h3>{{ module.name }}</h3>
         <button 
-          (click)="toggleFavorite(module)" 
+          (click)="toggleFavorite(module); $event.stopPropagation()" 
           [class]="'favorite-btn ' + (isFavorite(module.id) ? 'favorite-active' : 'favorite-inactive')"
           [title]="isFavorite(module.id) ? 'Verwijder uit favorieten' : 'Toevoegen aan favorieten'">
           <i [class]="isFavorite(module.id) ? 'fas fa-heart' : 'far fa-heart'"></i>
