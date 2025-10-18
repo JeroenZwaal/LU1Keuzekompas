@@ -7,6 +7,8 @@ on:
   push:
     branches:
       - master
+    paths:
+      - 'Frontend/**'
   workflow_dispatch:
 
 jobs:
