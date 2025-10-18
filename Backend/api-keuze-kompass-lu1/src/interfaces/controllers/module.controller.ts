@@ -1,6 +1,6 @@
 import { Controller, Get, Param, Query, HttpStatus, HttpException, UseGuards } from '@nestjs/common';
 import { ModuleResponseDto } from '../presenters/module.dto';
-import { ModuleService } from '../../application/services/module.service';
+import { ModuleService } from '../../application/services/module.service.js';
 import { Module } from '../../domain/entities/module.entity';
 import { JwtAuthGuard } from 'src/infrastructure/auth/jwt.auth.guard';
 import { CurrentUser } from '../decorators/current.user.decorator';
