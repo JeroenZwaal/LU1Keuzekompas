@@ -36,8 +36,14 @@ jobs:
     - name: npm install, build, and test
       working-directory: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
       run: |
+        echo "Cleaning previous builds..."
+        rm -rf dist node_modules/.cache
+        echo "Installing dependencies..."
         npm install
-        npm run build --if-present
+        echo "Building application..."
+        npm run build
+        echo "Checking build output..."
+        ls -la dist/ || echo "No dist folder found"
 
     - name: Upload artifact for deployment job
       uses: actions/upload-artifact@v4
