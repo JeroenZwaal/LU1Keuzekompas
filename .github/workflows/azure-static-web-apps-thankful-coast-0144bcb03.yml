@@ -30,7 +30,7 @@ jobs:
           # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
           app_location: "./Frontend/ClientKeuzeKompassLU1" # App source code path
           api_location: "" # Api source code path - optional
-          output_location: "dist/ClientKeuzeKompassLU1" # Built app content directory - optional
+          output_location: "dist/browser" # Built app content directory - optional
           ###### End of Repository/Build Configurations ######
         env:
           NODE_VERSION: '22'
