@@ -18,7 +18,6 @@ export class ModuleService {
         return module;
     }
 
-
     async getFilteredModules(filters: {
         studycredit?: number;
         location?: string;
