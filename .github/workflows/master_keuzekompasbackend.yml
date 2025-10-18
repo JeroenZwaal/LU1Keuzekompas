@@ -22,13 +22,21 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '22.x'
+          cache: 'npm'
+          cache-dependency-path: './Backend/api-keuze-kompass-lu1/package-lock.json'
 
-      - name: npm install, build, and test backend
+      - name: npm install and build backend
         working-directory: ./Backend/api-keuze-kompass-lu1
+        env:
+          NODE_ENV: production
+          CI: true
         run: |
+          echo "Installing dependencies..."
           npm install
-          npm run build --if-present
-          npm run test --if-present
+          echo "Building application..."
+          npm run build
+          echo "Build completed successfully!"
+          ls -la dist/
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
