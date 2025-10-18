@@ -22,24 +22,12 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '22.x'
-          cache: 'npm'
-          cache-dependency-path: './Backend/api-keuze-kompass-lu1/package-lock.json'
 
       - name: npm install and build backend
         working-directory: ./Backend/api-keuze-kompass-lu1
-        env:
-          NODE_ENV: production
-          CI: true
         run: |
-          echo "Installing dependencies..."
           npm install
-          echo "Building application with NestJS CLI..."
-          npm run build || {
-            echo "NestJS build failed, trying TypeScript compiler..."
-            npm run build:tsc
-          }
-          echo "Build completed successfully!"
-          ls -la dist/
+          npm run build
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
