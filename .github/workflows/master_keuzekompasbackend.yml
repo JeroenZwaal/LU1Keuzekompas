@@ -33,8 +33,11 @@ jobs:
         run: |
           echo "Installing dependencies..."
           npm install
-          echo "Building application..."
-          npm run build
+          echo "Building application with NestJS CLI..."
+          npm run build || {
+            echo "NestJS build failed, trying TypeScript compiler..."
+            npm run build:tsc
+          }
           echo "Build completed successfully!"
           ls -la dist/
 
