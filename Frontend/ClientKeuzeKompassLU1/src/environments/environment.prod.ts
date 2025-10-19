@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://keuzekompasbackend.azurewebsites.net',
+  apiUrl: 'https://keuzekompasbackend.azurewebsites.net/api',
 };
