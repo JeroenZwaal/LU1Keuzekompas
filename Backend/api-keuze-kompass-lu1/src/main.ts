@@ -9,6 +9,7 @@ async function bootstrap() {
     origin: [
       'http://localhost:4200',
       'http://localhost:3000',
+      'https://thankful-coast-0144bcb03.2.azurestaticapps.net', // Azure Static Web App URL
       process.env.FRONTEND_URL || 'http://localhost:4200',
     ],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
